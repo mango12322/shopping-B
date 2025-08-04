@@ -2,8 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const userController = require("../controllers/userController");
+const authContorller = require("../controllers/authController");
 
-// 회원기입
+// 회원가입
 router.post("/", userController.createUser);
+// 토큰 값을 받는데 (header)
+router.get("/me", authContorller.authenticate, userController.getUser);
 
 module.exports = router;
