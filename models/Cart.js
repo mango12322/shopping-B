@@ -5,10 +5,10 @@ const User = require("./User");
 
 const cartSchema = Schema(
   {
-    userId: { type: mongoose.isObjectIdOrHexString, ref: User },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     items: [
       {
-        productId: { type: mongoose.isObjectIdOrHexString, ref: Product },
+        productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
         size: { type: String, required: true },
         qty: { type: Number, default: 1, required: true },
       },
@@ -20,8 +20,8 @@ const cartSchema = Schema(
 cartSchema.methods.toJSON = function () {
   const obj = this._doc;
   delete obj.__v;
-  delete obj.updateAt;
-  delete obj.createAt;
+  delete obj.updatedAt;
+  delete obj.createdAt;
   return obj;
 };
 
