@@ -5,9 +5,9 @@ require("dotenv").config();
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
-const authContorller = {};
+const authController = {};
 
-authContorller.loginWithEmail = async (req, res) => {
+authController.loginWithEmail = async (req, res) => {
   try {
     const { email, password } = req.body;
     let user = await User.findOne({ email });
@@ -26,7 +26,7 @@ authContorller.loginWithEmail = async (req, res) => {
   }
 };
 
-authContorller.authenticate = async (req, res, next) => {
+authController.authenticate = async (req, res, next) => {
   try {
     // 헤더에서 토큰 가져오기
     const tokenString = req.headers.authorization;
@@ -45,10 +45,10 @@ authContorller.authenticate = async (req, res, next) => {
   }
 };
 
-authContorller.checkAdminPermission = async (req, res, next) => {
+authController.checkAdminPermission = async (req, res, next) => {
   try {
     const { userId } = req;
-    const user = await User.findbyId(userId);
+    const user = await User.findById(userId);
     if (user.level !== "admin") throw new Error("권한이 없습니다.");
     next();
   } catch (error) {
@@ -56,4 +56,4 @@ authContorller.checkAdminPermission = async (req, res, next) => {
   }
 };
 
-module.exports = authContorller;
+module.exports = authController;
